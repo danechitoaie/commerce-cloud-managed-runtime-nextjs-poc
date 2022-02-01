@@ -1,7 +1,7 @@
 const next = require("next");
 const express = require("express");
 const aws = require("aws-serverless-express");
-const compression = require("compression");
+// const compression = require("compression");
 const path = require("path");
 
 module.exports.get = (event, context) => {
@@ -9,7 +9,7 @@ module.exports.get = (event, context) => {
         dev: false,
         dir: path.resolve(__dirname),
         conf: { compress: false },
-        // customServer: true,
+        customServer: true,
         // minimalMode: true,
     });
 
@@ -17,7 +17,7 @@ module.exports.get = (event, context) => {
 
     nextApp.prepare().then(() => {
         const expressApp = express();
-        expressApp.use(compression());
+        // expressApp.use(compression());
         // expressApp.use("/_next/static", express.static(path.join(__dirname, ".next", "static")));
         expressApp.all("*", (req, res) => {
             return handle(req, res);
